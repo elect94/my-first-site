@@ -1,10 +1,10 @@
 /* 나의 첫 웹사이트 - 디자인(CSS) 파일 */
 /* index.html의 <head>에서 <link rel="stylesheet" href="style.css">로 불러와요 */
 
-/* 눈누 필기체 폰트: Cafe24 Loving u (상업적 무료, 웹폰트 사용 가능) */
+/* 눈누 손글씨 폰트: 코트라 손글씨체 (상업적 무료, 웹사이트·임베딩 사용 가능) */
 @font-face {
-  font-family: 'Cafe24LovingU';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2405-3@1.1/Cafe24Lovingu.woff2') format('woff2');
+  font-family: 'KotraHandwritingFont';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/KOTRA_SONGEULSSI.woff') format('woff');
   font-weight: normal;
   font-display: swap;
 }
@@ -92,8 +92,8 @@ header {
 
 .email a {
   display: inline-block;
-  font-family: 'Cafe24LovingU', cursive;       /* 필기체 */
-  font-size: 34px;   /* 이 폰트는 글자가 작게 그려져서 크게 설정 */
+  font-family: 'KotraHandwritingFont', "Malgun Gothic", sans-serif;  /* 깔끔한 손글씨 */
+  font-size: 22px;
   font-weight: normal;
   letter-spacing: 0.5px;
   color: white;
