@@ -6,7 +6,7 @@ $listener.Start()
 Write-Host "Serving $root at http://localhost:8080/"
 $types = @{ ".html"="text/html; charset=utf-8"; ".css"="text/css"; ".js"="application/javascript";
             ".svg"="image/svg+xml"; ".png"="image/png"; ".jpg"="image/jpeg"; ".jpeg"="image/jpeg";
-            ".gif"="image/gif"; ".webp"="image/webp" }
+            ".gif"="image/gif"; ".webp"="image/webp"; ".mp3"="audio/mpeg" }
 while ($listener.IsListening) {
   $ctx = $listener.GetContext()
   $path = [Uri]::UnescapeDataString($ctx.Request.Url.AbsolutePath).TrimStart("/")
