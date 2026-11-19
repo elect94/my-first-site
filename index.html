@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>나의 첫 웹사이트</title>
+
+  <!-- CSS: 웹페이지를 꾸미는 코드 -->
+  <style>
+    /* 눈누 필기체 폰트: Cafe24 Loving u (상업적 무료, 웹폰트 사용 가능) */
+    @font-face {
+      font-family: 'Cafe24LovingU';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2405-3@1.1/Cafe24Lovingu.woff2') format('woff2');
+      font-weight: normal;
+      font-display: swap;
+    }
+
+    /* 페이지 전체 */
+    body {
+      font-family: "Malgun Gothic", sans-serif;  /* 글꼴 */
+      background-color: #f4f6fb;                 /* 배경색 */
+      color: #333333;                            /* 글자색 */
+      line-height: 1.7;                          /* 줄 간격 */
+      max-width: 720px;                          /* 내용 최대 너비 */
+      margin: 0 auto;                            /* 가운데 정렬 */
+      padding: 20px;                             /* 안쪽 여백 */
+    }
+
+    /* 머리 부분 */
+    header {
+      background-color: #4a6cf7;
+      color: white;
+      text-align: center;
+      padding: 40px 20px;
+      border-radius: 16px;      /* 모서리 둥글게 */
+      margin-bottom: 24px;
+    }
+
+    /* 프로필 사진: 동그랗게 */
+    .profile {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;         /* 50%면 완전한 원 */
+      object-fit: cover;          /* 사진이 찌그러지지 않게 */
+      object-position: center 30%; /* 세로로 긴 사진에서 얼굴 쪽을 보여주기 */
+      display: block;
+    }
+
+    /* 프로필 사진을 감싸는 글로우 틀: 4px 여백이 빛나는 테두리가 됨 */
+    .glow-avatar {
+      position: relative;
+      isolation: isolate;
+      display: inline-block;
+      padding: 4px;
+      border-radius: 50%;
+      margin-bottom: 12px;
+      transition: transform 0.3s ease-out;
+    }
+
+    .glow-avatar .glow-halo {
+      inset: -8px;
+      filter: blur(18px);
+      opacity: 0.5;
+    }
+
+    .glow-avatar:hover .glow-halo {
+      opacity: 0.95;
+    }
+
+    /* 사진 위를 따라다니는 하이라이트 (동그랗게 자르기) */
+    .glow-avatar .avatar-light {
+      inset: 4px;
+      border-radius: 50%;
+      background: radial-gradient(70px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.35), transparent 70%);
+    }
+
+    .glow-avatar:hover .glow-light {
+      opacity: 1;
+    }
+
+    /* 본문 사진: 카드 너비에 맞추기 */
+    .photo {
+      width: 100%;
+      border-radius: 8px;
+    }
+
+    /* 프로필 사진 아래 이메일 */
+    .email {
+      margin: 0 0 16px 0;
+    }
+
+    .email a {
+      display: inline-block;
+      font-family: 'Cafe24LovingU', cursive;       /* 필기체 */
+      font-size: 34px;   /* 이 폰트는 글자가 작게 그려져서 크게 설정 */
+      font-weight: normal;
+      letter-spacing: 0.5px;
+      color: white;
+      transition: transform 0.2s;  /* 부드러운 움직임 */
+    }
+
+    .email a:hover {
+      transform: translateY(-2px);  /* 살짝 떠오르기 */
+      text-decoration: none;
+    }
+
+    header h1 {
+      margin: 0 0 8px 0;
+    }
+
+    /* 메뉴를 누르면 부드럽게 스크롤 */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* 메뉴 */
+    nav {
+      position: sticky;       /* 스크롤해도 화면 위에 붙어 있기 */
+      top: 0;
+      z-index: 10;            /* 다른 요소보다 위에 보이기 */
+      display: flex;          /* 메뉴를 가로로 나란히 */
+      flex-wrap: wrap;        /* 화면이 좁으면 다음 줄로 */
+      justify-content: center;
+      gap: 8px;
+      background-color: white;
+      padding: 10px;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    nav a {
+      padding: 6px 14px;
+      border-radius: 999px;   /* 알약 모양 */
+      color: #555555;
+      font-weight: normal;
+    }
+
+    nav a:hover {
+      background-color: #4a6cf7;
+      color: white;
+      text-decoration: none;
+    }
+
+    /* 메뉴로 이동했을 때 제목이 메뉴에 가려지지 않게 */
+    section {
+      scroll-margin-top: 80px;
+    }
+
+    /* 본문의 각 칸을 카드처럼 */
+    section {
+      background-color: white;
+      padding: 20px 24px;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);  /* 그림자 */
+    }
+
+    h2 {
+      color: #4a6cf7;
+      margin-top: 0;
+      border-bottom: 2px solid #e3e8fd;  /* 제목 밑줄 */
+      padding-bottom: 6px;
+    }
+
+    strong {
+      color: #4a6cf7;
+    }
+
+    /* 링크 */
+    a {
+      color: #4a6cf7;
+      font-weight: bold;
+      text-decoration: none;  /* 기본 밑줄 없애기 */
+    }
+
+    a:hover {
+      text-decoration: underline;  /* 마우스를 올리면 밑줄 */
+    }
+
+    /* 버튼 묶음: 가로로 나란히 */
+    .buttons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    /* ===== 마그네틱 글로우 버튼 ===== */
+
+    /* 회전시킬 각도 변수 (애니메이션이 가능하도록 등록) */
+    @property --glow-angle {
+      syntax: "<angle>";
+      initial-value: 0deg;
+      inherits: false;
+    }
+
+    @keyframes glow-spin {
+      to { --glow-angle: 360deg; }
+    }
+
+    @keyframes glow-ripple {
+      from { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+      to   { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+    }
+
+    /* 버튼 바깥 틀: 1px 여백이 빛나는 테두리가 됨 */
+    .glow-btn {
+      position: relative;
+      isolation: isolate;          /* 빛 효과가 버튼 뒤에만 깔리도록 */
+      display: inline-flex;
+      padding: 1px;
+      border-radius: 999px;
+      color: white;
+      font-size: 13px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: transform 0.3s ease-out;  /* 끌려갔다 돌아올 때 부드럽게 */
+    }
+
+    .glow-btn:hover {
+      text-decoration: none;
+    }
+
+    /* 키보드(Tab)로 선택했을 때 보이는 테두리 */
+    .glow-btn:focus-visible {
+      outline: 2px solid #c7d2fe;
+      outline-offset: 4px;
+    }
+
+    /* 회전하는 무지개 테두리 */
+    .glow-ring,
+    .glow-halo {
+      position: absolute;
+      border-radius: 999px;
+      background: conic-gradient(from var(--glow-angle), #6d7cff, #ff6bd5, #33d6c7, #6d7cff);
+      animation: glow-spin 3s linear infinite;
+    }
+
+    .glow-ring {
+      inset: 0;
+      z-index: -1;
+    }
+
+    /* 같은 색을 흐리게 번지게 해서 빛나는 느낌 */
+    .glow-halo {
+      inset: -5px;
+      z-index: -2;
+      filter: blur(12px);
+      opacity: 0.4;
+      transition: opacity 0.3s;
+    }
+
+    .glow-btn:hover .glow-halo,
+    .glow-btn:focus-visible .glow-halo {
+      opacity: 0.9;
+    }
+
+    /* 버튼 안쪽 (글자가 있는 부분) */
+    .glow-inner {
+      position: relative;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      border-radius: 999px;
+      padding: 6px 14px;
+      background-color: #0b0d1a;   /* 주 버튼: 진한 남색 */
+    }
+
+    .glow-sub .glow-inner {
+      background-color: #4a6cf7;   /* 보조 버튼: 헤더와 같은 파랑 → 빛 테두리만 보임 */
+    }
+
+    /* 마우스 위치를 따라다니는 하이라이트 */
+    .glow-light {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(60px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.25), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .glow-btn:hover .glow-light {
+      opacity: 1;
+    }
+
+    .glow-label {
+      position: relative;
+    }
+
+    /* 클릭했을 때 퍼지는 물결 */
+    .glow-ripple {
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      pointer-events: none;
+      animation: glow-ripple 0.7s ease-out forwards;
+    }
+
+    /* 움직임 줄이기 설정을 켠 사람에게는 애니메이션 끄기 */
+    @media (prefers-reduced-motion: reduce) {
+      .glow-ring, .glow-halo, .glow-ripple { animation: none; }
+      .glow-btn, .glow-avatar { transition: none; }
+    }
+
+    /* 바닥 부분 */
+    footer {
+      text-align: center;
+      color: #888888;
+      font-size: 14px;
+      margin-top: 32px;
+    }
+  </style>
+</head>
+<body>
+  <!-- 머리 부분: 사이트 제목 -->
+  <header>
+    <!-- 글로우 프로필: 빛이 사진 테두리를 따라 돌고, 마우스 쪽으로 끌려와요 -->
+    <div class="glow-avatar" data-strength="14">
+      <span class="glow-ring" aria-hidden="true"></span>
+      <span class="glow-halo" aria-hidden="true"></span>
+      <img class="profile" src="images/profile-illust.webp" alt="내 프로필 사진">
+      <span class="glow-light avatar-light" aria-hidden="true"></span>
+    </div>
+    <p class="email"><a href="mailto:elect94@naver.com">elect94@naver.com</a></p>
+    <h1>안녕하세요! 저는 ○○○입니다</h1>
+    <p>바이브 코딩으로 나만의 웹사이트를 만들고 있어요.</p>
+
+    <!-- 마그네틱 글로우 버튼: 빛이 테두리를 따라 돌고, 마우스 쪽으로 끌려와요 -->
+    <div class="buttons">
+      <a class="glow-btn glow-main" href="mailto:elect94@naver.com">
+        <span class="glow-ring" aria-hidden="true"></span>
+        <span class="glow-halo" aria-hidden="true"></span>
+        <span class="glow-inner">
+          <span class="glow-light" aria-hidden="true"></span>
+          <span class="glow-label">연락하기 →</span>
+        </span>
+      </a>
+      <a class="glow-btn glow-sub" href="#about">
+        <span class="glow-ring" aria-hidden="true"></span>
+        <span class="glow-halo" aria-hidden="true"></span>
+        <span class="glow-inner">
+          <span class="glow-light" aria-hidden="true"></span>
+          <span class="glow-label">더 알아보기</span>
+        </span>
+      </a>
+    </div>
+  </header>
+
+  <!-- 메뉴: 누르면 해당 칸으로 이동 -->
+  <nav>
+    <a href="#about">자기소개</a>
+    <a href="#likes">좋아하는 것</a>
+    <a href="#travel">여행지</a>
+    <a href="#goals">목표</a>
+    <a href="#links">링크</a>
+  </nav>
+
+  <!-- 본문 -->
+  <main>
+    <section id="about">
+      <h2>자기소개</h2>
+      <p>저는 새로운 것을 배우는 걸 좋아합니다. 요즘은 <strong>웹사이트 만들기</strong>에 푹 빠져 있어요.</p>
+    </section>
+
+    <section id="likes">
+      <h2>좋아하는 것</h2>
+      <ul>
+        <li>책 읽기</li>
+        <li>여행 가기</li>
+        <li>맛있는 음식 먹기</li>
+      </ul>
+    </section>
+
+    <section id="travel">
+      <h2>가고 싶은 여행지</h2>
+      <img class="photo" src="https://picsum.photos/id/1018/800/450" alt="산과 호수가 있는 풍경">
+      <p>언젠가 이런 멋진 풍경을 직접 보러 가고 싶어요.</p>
+    </section>
+
+    <section id="goals">
+      <h2>올해 목표</h2>
+      <ol>
+        <li>나만의 웹사이트 완성하기</li>
+        <li>매일 조금씩 공부하기</li>
+        <li>만든 사이트를 친구에게 보여주기</li>
+      </ol>
+    </section>
+
+    <section id="links">
+      <h2>자주 가는 사이트</h2>
+      <p><a href="https://www.naver.com" target="_blank">네이버 바로가기</a></p>
+    </section>
+  </main>
+
+  <!-- 바닥 부분 -->
+  <footer>
+    <p>© 2026 나의 첫 웹사이트</p>
+  </footer>
+
+  <!-- JavaScript: 버튼이 마우스에 끌려오고, 클릭하면 물결이 퍼지게 -->
+  <script>
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    // 버튼과 프로필 사진에 같은 효과 적용
+    document.querySelectorAll('.glow-btn, .glow-avatar').forEach(function (btn) {
+      // 마우스 쪽으로 끌려가는 최대 거리(px). data-strength가 있으면 그 값 사용
+      const strength = Number(btn.dataset.strength) || 8;
+
+      // 마우스가 버튼 위에서 움직일 때
+      btn.addEventListener('pointermove', function (event) {
+        const box = btn.getBoundingClientRect();
+        const x = (event.clientX - box.left) / box.width;   // 0 ~ 1
+        const y = (event.clientY - box.top) / box.height;   // 0 ~ 1
+
+        // 하이라이트 위치
+        btn.style.setProperty('--mx', (x * 100) + '%');
+        btn.style.setProperty('--my', (y * 100) + '%');
+
+        // 마우스 쪽으로 끌려가기
+        if (!reduceMotion.matches) {
+          btn.style.transform = 'translate(' + (x - 0.5) * strength + 'px, ' + (y - 0.5) * strength + 'px)';
+        }
+      });
+
+      // 마우스가 버튼을 떠나면 제자리로
+      btn.addEventListener('pointerleave', function () {
+        btn.style.transform = '';
+      });
+
+      // 클릭하면 물결 효과
+      btn.addEventListener('click', function (event) {
+        const inner = btn.querySelector('.glow-inner');
+        if (reduceMotion.matches || !inner) return;  // 프로필 사진엔 물결 없음
+        const box = inner.getBoundingClientRect();
+        const ripple = document.createElement('span');
+        ripple.className = 'glow-ripple';
+        ripple.setAttribute('aria-hidden', 'true');
+        // 키보드(Enter)로 누르면 좌표가 없으니 가운데에서 퍼지게
+        const fromPointer = event.clientX !== 0 || event.clientY !== 0;
+        ripple.style.left = (fromPointer ? event.clientX - box.left : box.width / 2) + 'px';
+        ripple.style.top = (fromPointer ? event.clientY - box.top : box.height / 2) + 'px';
+        inner.appendChild(ripple);
+        setTimeout(function () { ripple.remove(); }, 700);
+      });
+    });
+  </script>
+</body>
+</html>
