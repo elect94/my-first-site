@@ -18,7 +18,14 @@
     /* 페이지 전체 */
     body {
       font-family: "Malgun Gothic", sans-serif;  /* 글꼴 */
-      background-color: #f4f6fb;                 /* 배경색 */
+      background-color: #3b3328;                 /* 사진이 뜨기 전 배경색 */
+      /* 배경화면: 위에 살짝 어두운 막을 깔아서 글자가 잘 보이게 */
+      background-image:
+        linear-gradient(rgba(30, 24, 16, 0.25), rgba(30, 24, 16, 0.25)),
+        url("images/background.webp");
+      background-size: cover;                    /* 화면을 꽉 채우기 */
+      background-position: center;               /* 가운데 기준 */
+      background-attachment: fixed;              /* 스크롤해도 배경은 고정 */
       color: #333333;                            /* 글자색 */
       line-height: 1.7;                          /* 줄 간격 */
       max-width: 720px;                          /* 내용 최대 너비 */
@@ -310,7 +317,8 @@
     /* 바닥 부분 */
     footer {
       text-align: center;
-      color: #888888;
+      color: #f5efe4;                               /* 배경 사진 위라 밝은 색 */
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);    /* 글자 그림자로 또렷하게 */
       font-size: 14px;
       margin-top: 32px;
     }
